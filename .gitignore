@@ -7,3 +7,7 @@ dist/
 media/
 scripts/.sample-treatwell.html
 fragebogen-florentine.html
+
+# Lokale Zugangsdaten – niemals committen
+ZUGANGSDATEN.local.md
+*.local.md
