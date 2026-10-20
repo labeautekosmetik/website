@@ -1,10 +1,11 @@
 ---
 // Text logo until we have Florentine's original logo file (lotus + wordmark).
+// Mirrors her existing brand (voucher design): "LA BEAUTÉ KOSMETIK" over her name.
 ---
 
 <span class="logo">
-  <span class="logo__mark">LA BEAUTÉ</span>
-  <span class="logo__sub">Kosmetik · Florentine Stukenkemper</span>
+  <span class="logo__mark">LA BEAUTÉ <span class="logo__k">KOSMETIK</span></span>
+  <span class="logo__sub">Florentine Stukenkemper</span>
 </span>
 
 <style>
@@ -17,6 +18,15 @@
     font-weight: 500;
     letter-spacing: 0.24em;
     font-size: 1.05rem;
+  }
+  .logo__k {
+    font-weight: 400;
+  }
+  @media (max-width: 380px) {
+    .logo__mark {
+      letter-spacing: 0.16em;
+      font-size: 0.95rem;
+    }
   }
   .logo__sub {
     font-size: 0.75rem;
