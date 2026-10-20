@@ -1,0 +1,117 @@
+---
+import Logo from './Logo.astro';
+import { site, whatsappLink } from '../data/site';
+import { categories } from '../data/treatments';
+import { u } from '../lib/url';
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <Logo />
+      <p class="footer__quote serif">„{site.quote}“</p>
+    </div>
+    <div>
+      <h2 class="footer__h">Studio</h2>
+      <address>
+        {site.address.street}<br />
+        {site.address.zip} {site.address.city}
+      </address>
+      <p class="footer__muted">{site.address.transit}</p>
+    </div>
+    <div>
+      <h2 class="footer__h">Kontakt</h2>
+      <ul>
+        <li><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a></li>
+        <li><a href={whatsappLink()} target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href={site.instagram} target="_blank" rel="noopener">Instagram {site.instagramHandle}</a></li>
+        <li><a href={u('kontakt/')}>Kontaktformular</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer__h">Behandlungen</h2>
+      <ul>
+        {categories.map((c) => <li><a href={u(`behandlungen/${c.slug}/`)}>{c.title}</a></li>)}
+      </ul>
+    </div>
+  </div>
+  <div class="container footer__legal">
+    <span>© {new Date().getFullYear()} {site.fullName}</span>
+    <span>
+      <a href={u('faq/')}>FAQ</a>
+      <a href={u('impressum/')}>Impressum</a>
+      <a href={u('datenschutz/')}>Datenschutz</a>
+    </span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--surface-2);
+    padding: 4rem 0 2rem;
+    font-size: 0.95rem;
+  }
+  .footer__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 800px) {
+    .footer__grid {
+      grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    }
+  }
+  .footer__h {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.9rem;
+  }
+  .footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .footer li {
+    margin: 0;
+  }
+  .footer a {
+    text-decoration: none;
+  }
+  .footer li a {
+    display: inline-block;
+    padding-block: 0.6rem;
+  }
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  address {
+    font-style: normal;
+  }
+  .footer__muted {
+    color: var(--muted);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+  .footer__quote {
+    font-size: 1.35rem;
+    margin-top: 1.25rem;
+    max-width: 18ch;
+  }
+  .footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .footer__legal a {
+    display: inline-block;
+    padding-block: 0.75rem;
+    margin-left: 1.25rem;
+  }
+</style>

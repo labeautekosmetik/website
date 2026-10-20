@@ -1,0 +1,34 @@
+# Every morning: pull menu, prices and reviews from Treatwell. If something changed,
+# commit it — Netlify then rebuilds the site automatically.
+# If the sync fails (e.g. Treatwell changed its page), the job fails and GitHub emails
+# the repo owner; the website keeps showing the last good data.
+name: Treatwell-Sync
+
+on:
+  schedule:
+    - cron: '15 4 * * *' # 06:15 German summer time
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/sync-treatwell.mjs
+      - name: Commit changes
+        run: |
+          if git diff --quiet src/data/treatwell.json; then
+            echo "Keine Änderungen."
+            exit 0
+          fi
+          git config user.name "treatwell-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/data/treatwell.json
+          git commit -m "Treatwell: Menü/Bewertungen aktualisiert"
+          git push

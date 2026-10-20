@@ -1,0 +1,119 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import BookButton from '../../components/BookButton.astro';
+import { categories } from '../../data/treatments';
+import { site, whatsappLink } from '../../data/site';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { u } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('magazin');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<'magazin'> };
+const { Content } = await render(entry);
+const cat = categories.find((c) => c.slug === entry.data.treatment);
+const path = `/magazin/${entry.id}/`;
+const heading = entry.data.title.replace(/\s*[–|-]\s*La Beauté.*$/, '');
+
+// Pull the "Häufige Fragen" section out of the markdown body for FAQ structured data.
+const faqBlock = (entry.body ?? '').split(/^##\s+Häufige Fragen\s*$/m)[1]?.split(/^##\s/m)[0] ?? '';
+// Each "### Question" is followed by its answer paragraph; the closing call to action is not part of it.
+const faq = faqBlock
+  .split(/^###\s+/m)
+  .slice(1)
+  .map((block) => {
+    const [q, ...rest] = block.split('\n');
+    const answer = rest.join('\n').trim().split(/\n\s*\n/)[0] ?? '';
+    return { q: q.trim(), a: answer.replace(/\*\*/g, '').replace(/\s+/g, ' ').trim() };
+  })
+  .filter((f) => f.q && f.a);
+const date = entry.data.pubDate.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title={entry.data.title}
+  description={entry.data.description}
+  schema={[
+    articleSchema({ title: heading, description: entry.data.description, path, date: entry.data.pubDate }),
+    breadcrumbSchema([
+      { name: 'Start', path: '/' },
+      { name: 'Magazin', path: '/magazin/' },
+      { name: heading, path },
+    ]),
+    ...(faq.length ? [faqSchema(faq)] : []),
+  ]}
+>
+  <article>
+    <PageHead
+      eyebrow={cat?.title ?? 'Magazin'}
+      title={heading}
+      crumbs={[
+        { name: 'Magazin', path: 'magazin/' },
+        { name: heading, path: path.slice(1) },
+      ]}
+    >
+      <p class="byline">Von {site.owner}, Kosmetikerin in Bochum · {date}</p>
+    </PageHead>
+    <div class="narrow prose">
+      <Content />
+    </div>
+    <aside class="narrow cta card" aria-label="Termin">
+      <h2>Lust bekommen?</h2>
+      <p>
+        Buch dir deinen Termin direkt online oder schreib mir, wenn du unsicher bist, was zu deiner Haut passt. Als
+        Neukundin bekommst du {site.newClientOffer}.
+      </p>
+      <div class="btn-row">
+        <BookButton />
+        {cat && <a class="btn btn--ghost" href={u(`behandlungen/${cat.slug}/`)}>{cat.title} ansehen</a>}
+        <a class="btn btn--ghost" href={whatsappLink()} target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </aside>
+  </article>
+</Base>
+
+<style>
+  .byline {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .cta {
+    margin-block: 3rem 5rem;
+    padding: 2rem;
+  }
+  .cta h2 {
+    font-size: 1.6rem;
+  }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+    font-size: 0.95rem;
+    display: block;
+    overflow-x: auto;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    text-align: left;
+    padding: 0.6em 0.8em;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .prose :global(th) {
+    font-weight: 500;
+    background: var(--surface-2);
+  }
+  @media (max-width: 600px) {
+    /* Fade on the right edge signals that the table scrolls sideways */
+    .prose :global(table) {
+      background:
+        linear-gradient(to right, var(--bg) 30%, transparent) left / 40px 100% no-repeat local,
+        linear-gradient(to left, var(--bg) 30%, transparent) right / 40px 100% no-repeat local,
+        linear-gradient(to left, rgba(0, 0, 0, 0.12), transparent) right / 14px 100% no-repeat scroll;
+    }
+  }
+</style>

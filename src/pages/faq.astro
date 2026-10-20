@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Faq from '../components/Faq.astro';
+import { generalFaq } from '../data/faq';
+import { categories } from '../data/treatments';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
+import { u } from '../lib/url';
+
+const all = [...generalFaq, ...categories.flatMap((c) => c.faq)];
+---
+
+<Base
+  title="Häufige Fragen – Kosmetik in Bochum"
+  description="Antworten auf häufige Fragen zu Terminen, Behandlungen, Microneedling, Green Peel®, Aquafacial und Lash Lifting bei La Beauté Kosmetik in Bochum."
+  schema={[faqSchema(all), breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'FAQ', path: '/faq/' }])]}
+>
+  <PageHead eyebrow="FAQ" title="Häufige <em>Fragen</em>" crumbs={[{ name: 'FAQ', path: 'faq/' }]} />
+  <div class="narrow" style="padding-bottom:5rem">
+    <h2 class="faq-h">Termine & Studio</h2>
+    <Faq items={generalFaq} />
+    {
+      categories.map((c) => (
+        <>
+          <h2 class="faq-h">
+            <a href={u(`behandlungen/${c.slug}/`)}>{c.title}</a>
+          </h2>
+          <Faq items={c.faq} />
+        </>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .faq-h {
+    font-size: 1.5rem;
+    margin-top: 3rem;
+  }
+  .faq-h a {
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,215 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import BookButton from '../components/BookButton.astro';
+import { site, whatsappLink } from '../data/site';
+import { breadcrumbSchema } from '../lib/schema';
+import { u } from '../lib/url';
+
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.fullName}, ${site.address.street}, ${site.address.zip} ${site.address.city}`)}`;
+---
+
+<Base
+  title="Kontakt & Anfahrt – Kosmetikstudio in Bochum"
+  description="So erreichst du La Beauté Kosmetik in Bochum: I. Parallelstraße 4, 3 Minuten vom Ruhrstadion. Termin online buchen, WhatsApp, Anruf oder Kontaktformular."
+  schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Kontakt', path: '/kontakt/' }])]}
+>
+  <PageHead
+    eyebrow="Kontakt & Anfahrt"
+    title="Schreib mir – ich freue mich auf <em>dich</em>"
+    lead="Termine buchst du am schnellsten online. Für Fragen, Gutscheine oder Wünsche erreichst du mich per WhatsApp, Telefon oder über das Formular."
+    crumbs={[{ name: 'Kontakt', path: 'kontakt/' }]}
+  />
+
+  <section class="container contact">
+    <div class="contact__info">
+      <div class="card">
+        <h2 class="contact__h">Studio</h2>
+        <address>
+          {site.fullName}<br />
+          {site.address.street}<br />
+          {site.address.zip} {site.address.city}
+        </address>
+        <p class="muted">{site.address.transit}</p>
+        <a href={mapsUrl} target="_blank" rel="noopener">Route planen →</a>
+      </div>
+      <div class="card">
+        <h2 class="contact__h">Termine</h2>
+        <p class="muted">{site.hoursNote}</p>
+        <BookButton />
+      </div>
+      <div class="card">
+        <h2 class="contact__h">Direkt</h2>
+        <ul class="contact__list">
+          <li><a href={whatsappLink()} target="_blank" rel="noopener">WhatsApp: {site.phoneDisplay}</a></li>
+          <li><a href={`tel:${site.phone.replace(/\s/g, '')}`}>Anrufen: {site.phoneDisplay}</a></li>
+          <li><a href={site.instagram} target="_blank" rel="noopener">Instagram: {site.instagramHandle}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <form
+      class="form card"
+      name="kontakt"
+      method="POST"
+      action={u('danke/')}
+      data-netlify="true"
+      netlify-honeypot="firma"
+    >
+      <h2 class="contact__h">Nachricht schreiben</h2>
+      <input type="hidden" name="form-name" value="kontakt" />
+      <p class="visually-hidden">
+        <label>Bitte nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off" /></label>
+      </p>
+      <div class="field">
+        <label for="f-name">Name</label>
+        <input id="f-name" name="name" required autocomplete="name" />
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-mail">E-Mail</label>
+          <input id="f-mail" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="f-tel">Telefon <span class="opt">(optional)</span></label>
+          <input id="f-tel" name="telefon" type="tel" autocomplete="tel" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-topic">Worum geht es?</label>
+        <select id="f-topic" name="anliegen">
+          <option value="frage">Frage zu einer Behandlung</option>
+          <option value="gutschein">Gutschein</option>
+          <option value="termin">Termin</option>
+          <option value="sonstiges">Sonstiges</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-msg">Nachricht</label>
+        <textarea id="f-msg" name="nachricht" rows="6" required></textarea>
+      </div>
+      <div class="field field--check">
+        <input id="f-ok" name="datenschutz" type="checkbox" value="ja" required />
+        <label for="f-ok">
+          Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet werden. Mehr dazu in der
+          <a href={u('datenschutz/')}>Datenschutzerklärung</a>.
+        </label>
+      </div>
+      <button class="btn" type="submit">Nachricht senden</button>
+      <p class="muted small">Ich melde mich in der Regel innerhalb von 1–2 Werktagen.</p>
+    </form>
+  </section>
+  <div class="section"></div>
+</Base>
+
+<script>
+  const topic = new URLSearchParams(location.search).get('anliegen');
+  const select = document.getElementById('f-topic') as HTMLSelectElement | null;
+  if (topic && select && [...select.options].some((o) => o.value === topic)) select.value = topic;
+</script>
+
+<style>
+  .contact {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 2.5rem;
+    }
+  }
+  .contact__info {
+    display: grid;
+    gap: 1rem;
+  }
+  .contact__h {
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  address {
+    font-style: normal;
+    margin-bottom: 0.75rem;
+  }
+  .muted {
+    color: var(--muted);
+  }
+  .small {
+    font-size: 0.85rem;
+    margin-top: 1rem;
+  }
+  .contact__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .contact__list li {
+    margin-bottom: 0.5rem;
+  }
+  .form {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1.1rem;
+    flex: 1;
+  }
+  .field-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+  }
+  .field-row .field {
+    min-width: 200px;
+  }
+  label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .opt {
+    font-weight: 400;
+    color: var(--muted);
+  }
+  input,
+  select,
+  textarea {
+    font: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 48px;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .field--check {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .field--check input {
+    min-height: auto;
+    width: 20px;
+    height: 20px;
+    margin-top: 3px;
+    flex: none;
+  }
+  .field--check label {
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+</style>

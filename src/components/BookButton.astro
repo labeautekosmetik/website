@@ -1,0 +1,19 @@
+---
+// Opens Treatwell in an overlay (see BookingDialog). Without JS it is a plain link to Treatwell.
+import { site } from '../data/site';
+
+interface Props {
+  label?: string;
+  variant?: 'primary' | 'ghost';
+  size?: 'normal' | 'small';
+  context?: string; // for screen readers, e.g. the treatment name
+  serviceId?: string; // Treatwell treatment id → preselected in the booking flow
+}
+const { label = 'Termin buchen', variant = 'primary', size = 'normal', context, serviceId } = Astro.props;
+const href = serviceId ? `${site.treatwell}?serviceIds=${serviceId}` : site.treatwell;
+const cls = ['btn', variant === 'ghost' && 'btn--ghost', size === 'small' && 'btn--small'].filter(Boolean).join(' ');
+---
+
+<a class={cls} href={href} target="_blank" rel="noopener" data-book>
+  {label}{context && <span class="visually-hidden"> – {context}</span>}
+</a>

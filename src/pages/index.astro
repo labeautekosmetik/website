@@ -1,0 +1,349 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import BookButton from '../components/BookButton.astro';
+import Photo from '../components/Photo.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import Reviews from '../components/Reviews.astro';
+import Faq from '../components/Faq.astro';
+import Stars from '../components/Stars.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { site, whatsappLink } from '../data/site';
+import { categories } from '../data/treatments';
+import { generalFaq } from '../data/faq';
+import treatwell from '../data/treatwell.json';
+import { faqSchema } from '../lib/schema';
+import { u } from '../lib/url';
+
+const articles = (await getCollection('magazin')).sort((a, b) => +b.data.pubDate - +a.data.pubDate).slice(0, 3);
+const homeFaq = generalFaq.slice(0, 5);
+---
+
+<Base
+  title="Kosmetikstudio Bochum – La Beauté Kosmetik | Green Peel®, Aquafacial, Microneedling"
+  description="Kosmetikstudio in Bochum-Innenstadt: Green Peel® nach Dr. Schrammek, Aquafacial, Microneedling, Gesichtsbehandlungen und Lash Lifting bei Florentine Stukenkemper. Online buchen."
+  schema={[faqSchema(homeFaq)]}
+>
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <span class="eyebrow">Kosmetikstudio · Bochum</span>
+        <h1>Professionelle Hautpflege in <em>Bochum</em></h1>
+        <p class="lead">
+          Green Peel®, Aquafacial, Microneedling und Lash Lifting bei Florentine – mit Hautanalyse, ehrlicher Beratung
+          und viel Zeit für dich.
+        </p>
+        <nav class="hero__topics" aria-label="Wonach suchst du?">
+          <a href={u('behandlungen/klassische-gesichtsbehandlungen/')}>Unreine Haut</a>
+          <a href={u('behandlungen/aquafacial-microneedling/')}>Glow & Poren</a>
+          <a href={u('behandlungen/green-peel/')}>Pigmentflecken</a>
+          <a href={u('behandlungen/wimpern-augenbrauen/')}>Wimpern & Brauen</a>
+        </nav>
+        <p class="hero__trust">
+          <Stars rating={treatwell.rating.average ?? 5} />
+          <span><strong>{treatwell.rating.average?.toLocaleString('de-DE')}</strong> aus {treatwell.rating.count} Bewertungen auf Treatwell</span>
+        </p>
+        <div class="btn-row">
+          <BookButton />
+          <a class="btn btn--ghost hero__secondary" href={u('behandlungen/')}>Behandlungen ansehen</a>
+        </div>
+      </div>
+      <div class="hero__img">
+        <Photo src="/images/studio-liege.jpg" alt="Behandlungsliege mit flauschiger Decke unter der LED-Lampe im Studio" eager position="50% 60%" mobileRatio="4 / 3" />
+      </div>
+    </div>
+  </section>
+
+  <section class="trustbar" aria-label="Auf einen Blick">
+    <ul class="container">
+      <li><strong>Green Peel®</strong> nach Dr. med. Christine Schrammek</li>
+      <li><strong>Cure Pen</strong> Microneedling mit LED-Licht</li>
+      <li><strong>Bochum-Innenstadt</strong> 3 Min. vom Ruhrstadion</li>
+      <li><strong>Neukundinnen</strong> {site.newClientOffer}</li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="beh-h">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Behandlungen</span>
+        <h2 id="beh-h">Für jede Haut die <em>passende</em> Behandlung</h2>
+        <p class="lead">Von der kleinen Auszeit bis zur intensiven Kräuterschälkur. Alle Preise und freien Termine siehst du direkt online.</p>
+      </div>
+      <div class="grid grid--4">
+        {categories.map((c) => <CategoryCard category={c} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="about-h">
+    <div class="container split">
+      <div class="split__img">
+        <Photo src="/images/studio-wartebereich.jpg" alt="Wartebereich mit rosa Samtsessel und Bildern an der Wand" position="35% 50%" mobileRatio="4 / 3" />
+      </div>
+      <div>
+        <span class="eyebrow">Über mich</span>
+        <h2 id="about-h">Hallo, ich bin <em>Florentine</em></h2>
+        <p>
+          Anfang 2026 habe ich mir meinen Traum erfüllt und mein eigenes Kosmetikstudio in Bochum eröffnet. Bei mir
+          bekommst du keine Behandlung von der Stange: Ich nehme mir Zeit, schaue mir deine Haut genau an und erkläre dir
+          jeden Schritt.
+        </p>
+        <p>
+          Dass ich nach so kurzer Zeit schon so viele Stammkundinnen begrüßen darf, macht mich unendlich dankbar. Ich
+          freue mich darauf, auch dich kennenzulernen.
+        </p>
+        <a class="btn btn--ghost" href={u('ueber-mich/')}>Mehr über mich</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="studio-h">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Das Studio</span>
+        <h2 id="studio-h">Ein Ort zum <em>Abschalten</em></h2>
+        <p class="lead">Weiche Decken, warmes Licht und alles blitzsauber – meine Kundinnen sagen, sie fühlen sich hier wie auf einer Wolke.</p>
+      </div>
+      <div class="gallery">
+        <Photo src="/images/studio-raum.jpg" alt="Behandlungsraum mit Liege, LED-Lampe und großem Wandbild" shape="soft" ratio="4 / 5" />
+        <Photo src="/images/studio-wolke.jpg" alt="Der Behandlungsstuhl „die Wolke“ mit flauschiger Decke" shape="soft" ratio="4 / 5" position="center top" />
+        <Photo src="/images/studio-detail.jpg" alt="Taupe-Handtücher, Duftdiffuser und schwarze Schälchen im Studio" shape="soft" ratio="4 / 5" />
+      </div>
+      <blockquote class="quote serif">„{site.quote}“</blockquote>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="rev-h">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Bewertungen</span>
+        <h2 id="rev-h">Das sagen meine <em>Kundinnen</em></h2>
+      </div>
+      <Reviews />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="offer-h">
+    <div class="container grid grid--2">
+      <div class="offer card">
+        <span class="eyebrow">Neu hier?</span>
+        <h2 id="offer-h">{site.newClientOffer}</h2>
+        <p>Für einen entspannten Einstieg in individuelle Hautpflege. Sag mir beim Termin einfach, dass du zum ersten Mal da bist.</p>
+        <BookButton label="Ersten Termin buchen" />
+      </div>
+      <div class="offer card">
+        <span class="eyebrow">Gutscheine</span>
+        <h2>Zeit für sich <em>verschenken</em></h2>
+        <p>Für eine bestimmte Behandlung oder über einen Wunschbetrag – liebevoll vorbereitet für Mama, die beste Freundin oder dich selbst.</p>
+        <a class="btn btn--ghost" href={u('gutscheine/')}>Gutschein anfragen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="mag-h">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Magazin</span>
+        <h2 id="mag-h">Wissen für deine <em>Haut</em></h2>
+      </div>
+      <div class="grid grid--3">
+        {articles.map((a) => <ArticleCard entry={a} />)}
+      </div>
+      <p style="margin-top:2rem"><a href={u('magazin/')}>Alle Artikel ansehen →</a></p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-h">
+    <div class="narrow">
+      <span class="eyebrow">Häufige Fragen</span>
+      <h2 id="faq-h">Gut zu <em>wissen</em></h2>
+      <Faq items={homeFaq} />
+      <p style="margin-top:1.5rem"><a href={u('faq/')}>Alle Fragen ansehen →</a></p>
+    </div>
+  </section>
+
+  <section class="insta" aria-label="Instagram">
+    <div class="container insta__inner">
+      <p>Neuigkeiten, freie Termine und Hauttipps findest du auf Instagram.</p>
+      <a class="btn btn--ghost" href={site.instagram} target="_blank" rel="noopener">{site.instagramHandle} folgen</a>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="contact-h">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Kontakt & Anfahrt</span>
+        <h2 id="contact-h">Ich freue mich auf <em>dich</em></h2>
+        <address class="contact-address">
+          {site.fullName}<br />
+          {site.address.street}<br />
+          {site.address.zip} {site.address.city}
+        </address>
+        <p class="muted">{site.address.transit}</p>
+        <p class="muted">{site.hoursNote}</p>
+        <div class="btn-row">
+          <BookButton />
+          <a class="btn btn--ghost" href={whatsappLink()} target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn btn--ghost" href={u('kontakt/')}>Nachricht schreiben</a>
+        </div>
+      </div>
+      <div class="split__img">
+        <Photo src="/images/studio-flur.jpg" alt="Heller Flur mit Holzboden und goldenen Flügeln an der Wand" shape="soft" ratio="4 / 3" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(2rem, 6vw, 5rem) clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .hero__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+    }
+  }
+  .hero__img {
+    max-width: 480px;
+    width: 100%;
+    justify-self: center;
+  }
+  @media (max-width: 899px) {
+    .hero__img {
+      max-width: 100%;
+    }
+  }
+  .hero__topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+  .hero__topics a {
+    font-size: 0.875rem;
+    text-decoration: none;
+    padding: 0.45em 1em;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: var(--accent-soft);
+  }
+  .hero__topics a:hover {
+    background: var(--surface-2);
+  }
+  .hero__trust {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.5rem 0 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .trustbar {
+    border-block: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .trustbar ul {
+    list-style: none;
+    margin-block: 0;
+    padding: 1.25rem 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  @media (min-width: 900px) {
+    .trustbar ul {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .trustbar strong {
+    display: block;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .split {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: 1fr 1fr;
+      gap: 4.5rem;
+    }
+  }
+  .split__img {
+    max-width: 460px;
+  }
+  .gallery {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 720px) {
+    .gallery {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 719px) {
+    /* Swipe row instead of three tall stacked photos */
+    .gallery {
+      grid-auto-flow: column;
+      grid-auto-columns: 78%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.5rem;
+    }
+    .gallery :global(img) {
+      scroll-snap-align: start;
+    }
+    .hero__secondary {
+      display: none;
+    }
+  }
+  .quote {
+    text-align: center;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    margin: 3rem auto 0;
+    max-width: 24ch;
+    color: var(--accent);
+  }
+  .offer {
+    padding: 2.25rem;
+  }
+  .offer h2 {
+    font-size: 1.8rem;
+  }
+  .insta {
+    border-top: 1px solid var(--line);
+    padding-block: 2rem;
+  }
+  .insta__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .insta p {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+  .contact-address {
+    font-style: normal;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .muted {
+    color: var(--muted);
+  }
+</style>

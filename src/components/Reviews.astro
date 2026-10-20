@@ -1,0 +1,130 @@
+---
+// Latest Treatwell reviews (synced daily). We show them as-is and link to the source.
+import Stars from './Stars.astro';
+import treatwell from '../data/treatwell.json';
+import { site } from '../data/site';
+
+interface Props {
+  limit?: number;
+  // Reviews mentioning these words come first (e.g. the treatment of the current page).
+  prefer?: string[];
+}
+const { limit = 3, prefer = ['Microneedling', 'Aquafacial', 'Haut', 'erklärt'] } = Astro.props;
+const score = (text: string) => prefer.reduce((n, w) => n + (text.toLowerCase().includes(w.toLowerCase()) ? 1 : 0), 0);
+// Prefer relevant and substantial reviews; ties keep Treatwell's newest-first order.
+const reviews = treatwell.reviews
+  .filter((r) => r.text && r.rating >= 4)
+  .map((r, i) => ({ r, i, s: score(r.text!) * 10 + Math.min(r.text!.length / 100, 3) }))
+  .sort((a, b) => b.s - a.s || a.i - b.i)
+  .map(({ r }) => r)
+  // One review per person, otherwise it looks padded.
+  .filter((r, i, all) => !r.name || all.findIndex((o) => o.name === r.name) === i)
+  .slice(0, limit);
+const fmt = (d: string) => new Date(d).toLocaleDateString('de-DE', { month: 'long', year: 'numeric' });
+---
+
+<div class="reviews">
+  {
+    reviews.map((r) => (
+      <figure class="review card">
+        <Stars rating={r.rating} />
+        <blockquote class:list={[{ 'is-long': r.text!.length > 260 }]}>
+          <p>{r.text}</p>
+        </blockquote>
+        {r.text!.length > 260 && <button type="button" class="review__more" aria-expanded="false">Weiterlesen</button>}
+        <figcaption>
+          <strong>{r.name ?? 'Kundin'}</strong>
+          <span>Verifiziert auf Treatwell · {fmt(r.date)}</span>
+        </figcaption>
+      </figure>
+    ))
+  }
+</div>
+<div class="reviews__source">
+  <p>
+    <Stars rating={treatwell.rating.average ?? 5} />
+    <strong>{treatwell.rating.average?.toLocaleString('de-DE')}</strong> von 5 aus {treatwell.rating.count} verifizierten
+    Bewertungen auf Treatwell
+  </p>
+  <a class="btn btn--ghost btn--small" href={site.treatwell} target="_blank" rel="noopener">Alle Bewertungen lesen</a>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.review__more').forEach((b) =>
+    b.addEventListener('click', () => {
+      const q = b.previousElementSibling as HTMLElement;
+      const open = q.classList.toggle('is-open');
+      b.setAttribute('aria-expanded', String(open));
+      b.textContent = open ? 'Weniger anzeigen' : 'Weiterlesen';
+    }),
+  );
+</script>
+
+<style>
+  .reviews {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 900px) {
+    .reviews {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .review {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .review blockquote {
+    margin: 0;
+    flex: 1;
+    font-size: 1rem;
+  }
+  .review blockquote p {
+    margin: 0;
+  }
+  .review blockquote.is-long:not(.is-open) p {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .review__more {
+    align-self: flex-start;
+    border: 0;
+    background: none;
+    padding: 0.5rem 0;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .review figcaption {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.875rem;
+  }
+  .review figcaption span {
+    color: var(--muted);
+  }
+  .reviews__source {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .reviews__source p {
+    margin: 0;
+  }
+  .reviews__source strong {
+    color: var(--text);
+    margin-inline: 0.3rem 0.1rem;
+  }
+</style>

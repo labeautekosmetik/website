@@ -1,0 +1,32 @@
+---
+interface Props {
+  rating: number;
+  size?: number;
+}
+const { rating, size = 16 } = Astro.props;
+const full = Math.round(rating);
+---
+
+<span class="stars" role="img" aria-label={`${rating.toLocaleString('de-DE')} von 5 Sternen`}>
+  {
+    Array.from({ length: 5 }, (_, i) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill={i < full ? 'currentColor' : 'none'}
+          stroke="currentColor"
+          stroke-width="1.4"
+          d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.8L12 3.5z"
+        />
+      </svg>
+    ))
+  }
+</span>
+
+<style>
+  .stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--accent);
+    vertical-align: -2px;
+  }
+</style>

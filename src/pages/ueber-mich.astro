@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Photo from '../components/Photo.astro';
+import BookButton from '../components/BookButton.astro';
+import { breadcrumbSchema } from '../lib/schema';
+---
+
+<Base
+  title="Über mich – Florentine Stukenkemper, Kosmetikerin in Bochum"
+  description="Florentine Stukenkemper hat 2026 ihr eigenes Kosmetikstudio La Beauté in Bochum eröffnet. Persönliche Beratung, viel Zeit und ein Studio zum Wohlfühlen."
+  image="/images/studio-wartebereich.jpg"
+  schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Über mich', path: '/ueber-mich/' }])]}
+>
+  <PageHead eyebrow="Über mich" title="Hallo, ich bin <em>Florentine</em>" crumbs={[{ name: 'Über mich', path: 'ueber-mich/' }]} />
+
+  <section class="container about">
+    <div class="about__img">
+      <!-- TODO(Florentine): Porträtfoto ersetzen -->
+      <Photo src="/images/studio-wartebereich.jpg" alt="Wartebereich im Studio La Beauté mit rosa Sessel" position="35% 50%" />
+    </div>
+    <div class="about__text">
+      <p class="lead">
+        Ich bin Kosmetikerin aus Leidenschaft – und seit Anfang 2026 mit La Beauté Kosmetik in Bochum selbstständig.
+      </p>
+      <p>
+        Ich bin unglaublich stolz, dass ich diesen Schritt gewagt habe. Schon nach wenigen Monaten durfte ich meine
+        ersten Stammkundinnen begrüßen – das macht mich sprachlos und unendlich dankbar. Danke für euer Vertrauen!
+      </p>
+      <h2>So arbeite ich</h2>
+      <p>
+        Jede Haut ist anders. Deshalb starte ich jede Behandlung damit, mir deine Haut genau anzuschauen und zuzuhören:
+        Was stört dich, was wünschst du dir? Danach erkläre ich dir jeden Schritt – damit du weißt, was passiert, und auch
+        zu Hause das Beste für deine Haut tun kannst.
+      </p>
+      <p>
+        Ich arbeite mit Methoden und Produkten, von denen ich überzeugt bin: mit Green Peel® nach Dr. med. Christine
+        Schrammek, dem Cure Pen von Cure Concept für Microneedling mit Lichttherapie und dem Lifting Pro+ System von
+        LASHBOOM für Wimpern und Brauen.
+      </p>
+      <h2>Mein Studio</h2>
+      <p>
+        Mein Behandlungsstuhl heißt bei uns nur „die Wolke“ – und genau so soll sich ein Termin bei mir anfühlen: weich,
+        warm und ganz entspannt. Über der Liege hängt mein Lieblingsspruch, der mich jeden Tag begleitet:
+      </p>
+      <blockquote class="serif about__quote">„Warte nicht auf den perfekten Moment – nimm dir den Moment und mach ihn perfekt.“</blockquote>
+      <p>Ich freue mich darauf, dich kennenzulernen!</p>
+      <p class="serif about__sign">Deine Florentine</p>
+      <div class="btn-row"><BookButton /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container gallery">
+      <Photo src="/images/studio-raum.jpg" alt="Behandlungsraum mit Wandbild" shape="soft" ratio="4 / 3" />
+      <Photo src="/images/studio-liege.jpg" alt="Behandlungsliege unter LED-Lampe" shape="soft" ratio="4 / 3" />
+      <Photo src="/images/studio-flur.jpg" alt="Flur mit Holzboden" shape="soft" ratio="4 / 3" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .about {
+      grid-template-columns: 1fr 1.3fr;
+      gap: 4.5rem;
+    }
+    .about__img {
+      position: sticky;
+      top: 110px;
+    }
+  }
+  .about__img {
+    max-width: 440px;
+  }
+  .about__text h2 {
+    font-size: 1.6rem;
+    margin-top: 2.2rem;
+  }
+  .about__quote {
+    font-size: 1.7rem;
+    color: var(--accent);
+    margin: 1.5rem 0;
+    line-height: 1.3;
+  }
+  .about__sign {
+    font-size: 1.6rem;
+  }
+  .gallery {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 720px) {
+    .gallery {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

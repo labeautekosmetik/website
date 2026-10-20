@@ -1,0 +1,57 @@
+---
+import { euro, itemsFor, priceFrom, type Category } from '../data/treatments';
+import { u } from '../lib/url';
+
+interface Props {
+  category: Category;
+}
+const { category: c } = Astro.props;
+const from = priceFrom(c);
+const isGreenPeel = c.slug === 'green-peel';
+---
+
+<a class:list={['cat card', { 'cat--green': isGreenPeel }]} href={u(`behandlungen/${c.slug}/`)}>
+  <h3>{c.title}</h3>
+  <p>{c.short}</p>
+  <span class="cat__foot">
+    {c.cardPrice ? <span>{c.cardPrice(itemsFor(c))}</span> : from && <span>ab {euro(from)}</span>}
+    <span class="cat__more" aria-hidden="true">→</span>
+  </span>
+</a>
+
+<style>
+  .cat {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 100%;
+  }
+  .cat:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+  .cat h3 {
+    margin-bottom: 0.5rem;
+  }
+  .cat p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    flex: 1;
+  }
+  .cat__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .cat__more {
+    color: var(--accent);
+    font-size: 1.2rem;
+  }
+  [data-theme='c2'] .cat--green {
+    box-shadow: inset 3px 0 0 var(--green);
+  }
+</style>

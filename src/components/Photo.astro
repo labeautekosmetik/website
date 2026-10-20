@@ -1,0 +1,46 @@
+---
+// Studio photo in the theme's shape (arch in c1, rounded rectangle in c2).
+import { u } from '../lib/url';
+
+interface Props {
+  src: string;
+  alt: string;
+  shape?: 'arch' | 'soft';
+  ratio?: string;
+  mobileRatio?: string;
+  position?: string;
+  eager?: boolean;
+}
+const { src, alt, shape = 'arch', ratio = '4 / 5', mobileRatio, position = 'center', eager = false } = Astro.props;
+---
+
+<img
+  class:list={['photo', `photo--${shape}`]}
+  src={u(src)}
+  alt={alt}
+  style={`--r:${ratio};${mobileRatio ? `--rm:${mobileRatio};` : ''}object-position:${position}`}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding="async"
+  width="1280"
+  height="800"
+/>
+
+<style>
+  .photo {
+    aspect-ratio: var(--r);
+    width: 100%;
+    object-fit: cover;
+    background: var(--surface-2);
+  }
+  @media (max-width: 899px) {
+    .photo {
+      aspect-ratio: var(--rm, var(--r));
+    }
+  }
+  .photo--arch {
+    border-radius: var(--img-radius);
+  }
+  .photo--soft {
+    border-radius: var(--img-radius-sm);
+  }
+</style>

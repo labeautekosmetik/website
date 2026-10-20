@@ -1,0 +1,165 @@
+---
+// Treatwell booking overlay. The iframe is only created after a click,
+// so no Treatwell request (or cookie) happens before the visitor wants to book.
+import { site } from '../data/site';
+---
+
+<dialog id="booking" class="booking" aria-labelledby="booking-title">
+  <div class="booking__bar">
+    <h2 id="booking-title" class="booking__title">Termin buchen</h2>
+    <a class="booking__ext" href={site.treatwell} target="_blank" rel="noopener" data-ext>In neuem Tab öffnen</a>
+    <button type="button" class="booking__close" data-close>
+      <span>Schließen</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>
+    </button>
+  </div>
+  <div class="booking__body" data-frame-host>
+    <p class="booking__loading">Online-Buchung wird geladen …</p>
+  </div>
+  <p class="booking__note">
+    <strong>Neu hier?</strong> Du bekommst {site.newClientOffer} – sag mir beim Termin einfach Bescheid. · Die Buchung
+    läuft über Treatwell, es gelten deren Datenschutzbestimmungen.
+  </p>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('booking') as HTMLDialogElement | null;
+  if (dialog && typeof dialog.showModal === 'function') {
+    const host = dialog.querySelector('[data-frame-host]')!;
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as Element).closest<HTMLAnchorElement>('a[data-book]');
+      if (!trigger || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      const existing = host.querySelector('iframe');
+      if (existing && existing.src !== trigger.href) {
+        existing.remove();
+        host.classList.remove('is-loaded');
+      }
+      if (!host.querySelector('iframe')) {
+        const frame = document.createElement('iframe');
+        frame.src = trigger.href;
+        frame.title = 'Online-Terminbuchung über Treatwell';
+        frame.loading = 'eager';
+        frame.addEventListener('load', () => host.classList.add('is-loaded'));
+        host.appendChild(frame);
+      }
+      (dialog.querySelector('[data-ext]') as HTMLAnchorElement).href = trigger.href;
+      dialog.showModal();
+      document.documentElement.style.overflow = 'hidden';
+      // Let the phone's back gesture close the overlay instead of leaving the site.
+      history.pushState({ booking: true }, '');
+    });
+    window.addEventListener('popstate', () => {
+      if (dialog.open) dialog.close();
+    });
+    const close = () => dialog.close();
+    dialog.querySelector('[data-close]')!.addEventListener('click', close);
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) close();
+    });
+    dialog.addEventListener('close', () => {
+      document.documentElement.style.overflow = '';
+      if (history.state?.booking) history.back();
+    });
+  }
+</script>
+
+<style>
+  .booking {
+    width: min(760px, 100vw);
+    height: min(860px, 100dvh);
+    max-width: 100vw;
+    max-height: 100dvh;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+  }
+  .booking[open] {
+    display: flex;
+  }
+  .booking::backdrop {
+    background: rgba(40, 34, 30, 0.55);
+    backdrop-filter: blur(3px);
+  }
+  .booking__bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0.75rem 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .booking__title {
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin: 0;
+    flex: 1;
+  }
+  .booking__ext {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .booking__close {
+    min-height: 44px;
+    padding: 0 0.75rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .booking__close:hover {
+    background: var(--surface-2);
+  }
+  .booking__body {
+    flex: 1;
+    position: relative;
+    background: #fff;
+  }
+  .booking__body :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .booking__loading {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    margin: 0;
+  }
+  .is-loaded .booking__loading {
+    display: none;
+  }
+  .booking__note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0;
+    padding: 0.5rem 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 767px) {
+    .booking {
+      width: 100vw;
+      height: 100dvh;
+      border-radius: 0;
+    }
+    .booking__ext {
+      font-size: 0.8rem;
+    }
+    .booking__title {
+      font-size: 0.95rem;
+    }
+  }
+</style>

@@ -1,0 +1,379 @@
+{
+  "source": "https://buchung.treatwell.de/ort/la-beaute-kosmetik-florentine-stukenkemper/",
+  "venueId": 523993,
+  "name": "La Beauté Kosmetik - Florentine Stukenkemper",
+  "rating": {
+    "average": 4.9,
+    "count": 9
+  },
+  "openingHours": [
+    {
+      "day": "monday",
+      "open": false,
+      "from": null,
+      "to": null
+    },
+    {
+      "day": "tuesday",
+      "open": true,
+      "from": "10:00",
+      "to": "18:00"
+    },
+    {
+      "day": "wednesday",
+      "open": true,
+      "from": "10:00",
+      "to": "18:00"
+    },
+    {
+      "day": "thursday",
+      "open": true,
+      "from": "10:00",
+      "to": "18:00"
+    },
+    {
+      "day": "friday",
+      "open": true,
+      "from": "10:00",
+      "to": "18:00"
+    },
+    {
+      "day": "saturday",
+      "open": false,
+      "from": null,
+      "to": null
+    },
+    {
+      "day": "sunday",
+      "open": false,
+      "from": null,
+      "to": null
+    }
+  ],
+  "groups": [
+    {
+      "id": 523993001,
+      "name": "Klassische Gesichtsbehandlungen",
+      "items": [
+        {
+          "id": "TR6977658",
+          "name": "Kleine Auszeit",
+          "steps": [
+            "Abreinigung",
+            "Peeling",
+            "Wirkstoffampulle",
+            "Kleine Gesichtsmassage",
+            "Abschlusspflege"
+          ],
+          "text": "",
+          "priceFrom": 65,
+          "priceTo": 65,
+          "durationMin": 60,
+          "durationMax": 60,
+          "options": []
+        },
+        {
+          "id": "TR6977659",
+          "name": "Hydra Boost",
+          "steps": [
+            "Abreinigung",
+            "Peeling - Bedampfer",
+            "Ausreinigung",
+            "Wirkstoffampulle",
+            "Algo Vitalmaske oder ähnlich",
+            "Gesichtsmassage",
+            "Abschlusspflege"
+          ],
+          "text": "",
+          "priceFrom": 90,
+          "priceTo": 90,
+          "durationMin": 80,
+          "durationMax": 80,
+          "options": []
+        },
+        {
+          "id": "TR6977660",
+          "name": "Premium Behandlung",
+          "steps": [
+            "Abreinigung",
+            "Enzymatisches Peeling & Bedampfer",
+            "Ausreinigung",
+            "Skinbooster Ampulle und Coldhammer",
+            "Anti-Age-Maske & Gesichtsmassage",
+            "Abschlusspflege"
+          ],
+          "text": "",
+          "priceFrom": 119,
+          "priceTo": 119,
+          "durationMin": 90,
+          "durationMax": 90,
+          "options": []
+        },
+        {
+          "id": "TR6977661",
+          "name": "Spezialbehandlung bei unreiner Haut",
+          "steps": [
+            "Reinigung & Bedampfer",
+            "Peeling",
+            "Ausreinigungs spezial",
+            "Klärende Maske & Coldhammer",
+            "Beruhigende Wirkstoffampulle",
+            "Abschlusspflege"
+          ],
+          "text": "",
+          "priceFrom": 75,
+          "priceTo": 90,
+          "durationMin": 75,
+          "durationMax": 90,
+          "options": [
+            {
+              "name": "75 minuten",
+              "price": 75,
+              "durationMinutes": 75
+            },
+            {
+              "name": "90 minuten",
+              "price": 90,
+              "durationMinutes": 90
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 523993002,
+      "name": "Effect Treatments",
+      "items": [
+        {
+          "id": "TR6977560",
+          "name": "Microneedling",
+          "steps": [
+            "Abreinigung",
+            "Enzymatisches Peeling & Bedampfer",
+            "Needling mit hochkonzentriertem Serum",
+            "incl. LED Lichttherapie",
+            "abgestimmte Spezialmaske"
+          ],
+          "text": "",
+          "priceFrom": 95,
+          "priceTo": 250,
+          "durationMin": 60,
+          "durationMax": 60,
+          "options": [
+            {
+              "name": "1er Paket",
+              "price": 95,
+              "durationMinutes": 60
+            },
+            {
+              "name": "3er Paket",
+              "price": 250,
+              "durationMinutes": 60
+            }
+          ]
+        },
+        {
+          "id": "TR6977694",
+          "name": "Aquafacial Classic",
+          "steps": [
+            "Abreinigung",
+            "Enzymatisches Peeling & Bedampfer",
+            "Basisbehandlung 3 Phasen",
+            "Maske & Coldhammer",
+            "Gesichtsmassage",
+            "Abschlusspflege"
+          ],
+          "text": "",
+          "priceFrom": 95,
+          "priceTo": 95,
+          "durationMin": 60,
+          "durationMax": 60,
+          "options": []
+        },
+        {
+          "id": "TR6977696",
+          "name": "Aquafacial Deluxe (Gesicht & Hals)",
+          "steps": [],
+          "text": "Durch die sanfte, intensive Reinigung bei der Aqua-Facial Behandlung wird die Haut intensiv mit Feuchtigkeit versorgt, gestrafft und verjüngt. Sie ist sehr beliebt, da sie bei allen Hautbildern und Hautstrukturen angewendet werden kann und sofort wirkt. Die Haut hat mehr Spannkraft, ist frischer und zart.",
+          "priceFrom": 129,
+          "priceTo": 129,
+          "durationMin": 105,
+          "durationMax": 105,
+          "options": []
+        },
+        {
+          "id": "TR6977706",
+          "name": "Microneedling & Aquafacial",
+          "steps": [],
+          "text": "Durch die sanfte, intensive Reinigung bei der Aqua-Facial Behandlung wird die Haut intensiv mit Feuchtigkeit versorgt, gestrafft und verjüngt. Sie ist sehr beliebt, da sie bei allen Hautbildern und Hautstrukturen angewendet werden kann und sofort wirkt. Die Haut hat mehr Spannkraft, ist frischer und zart.",
+          "priceFrom": 150,
+          "priceTo": 150,
+          "durationMin": 90,
+          "durationMax": 90,
+          "options": []
+        }
+      ]
+    },
+    {
+      "id": 523993003,
+      "name": "Green Peel Kräuterschälkur",
+      "items": [
+        {
+          "id": "TR6977733",
+          "name": "Fresh Up",
+          "steps": [
+            "Müde wirkende Haut",
+            "Hautalterung",
+            "Fahler Teint"
+          ],
+          "text": "Frischekick als schneller Schönmacher ohne Schälung",
+          "priceFrom": 129,
+          "priceTo": 129,
+          "durationMin": 90,
+          "durationMax": 90,
+          "options": []
+        },
+        {
+          "id": "TR6977756",
+          "name": "Energy Peeling",
+          "steps": [
+            "Unreinheiten",
+            "Falten",
+            "Sonnengeschädigte Haut",
+            "Pigmentstörungen",
+            "Unebene Haut"
+          ],
+          "text": "Frischekick als schneller Schönmacher ohne Schälung inklusive Heimpflegeset",
+          "priceFrom": 170,
+          "priceTo": 170,
+          "durationMin": 90,
+          "durationMax": 90,
+          "options": []
+        },
+        {
+          "id": "TR6977777",
+          "name": "Green Peel Classic",
+          "steps": [
+            "Großporige Haut",
+            "Narbenbildung",
+            "Hyperpigmentierung",
+            "Sonnengeschädigte Haut"
+          ],
+          "text": "Frischekick als schneller Schönmacher ohne Schälung",
+          "priceFrom": 295,
+          "priceTo": 295,
+          "durationMin": 90,
+          "durationMax": 90,
+          "options": []
+        }
+      ]
+    },
+    {
+      "id": 523993004,
+      "name": "Zusatzbehandlungen",
+      "items": [
+        {
+          "id": "TR7121591",
+          "name": "Lash Lifting inkl. Färben & Pflege",
+          "steps": [],
+          "text": "Gerade Wimpern können unbemerkt bleiben. Ein Wimpernlifting öffnet deine Augen und verleiht den Wimpern Länge und Fülle. Ein Wimpernlifting ist die perfekte Behandlung, um deine Wimpern zum Flattern und Glänzen zu bringen.",
+          "priceFrom": 69,
+          "priceTo": 69,
+          "durationMin": 60,
+          "durationMax": 60,
+          "options": []
+        },
+        {
+          "id": "TR7121604",
+          "name": "Brow Lifting inkl. Färben & Styling",
+          "steps": [],
+          "text": "Bei einem Augenbrauenlifting werden deine Härchen verstärkt, sodass die Form über mehrere Wochen anhält. Dabei werden die Brauen so formbar gemacht, dass es einfacher ist sie in alle Formen und Richtungen zu stylen.",
+          "priceFrom": 60,
+          "priceTo": 60,
+          "durationMin": 60,
+          "durationMax": 60,
+          "options": []
+        },
+        {
+          "id": "TR6977723",
+          "name": "Wimpern färben & Augenbrauen färben inkl. Augenbrauen zupfen",
+          "steps": [],
+          "text": "Das ultimative Augenpaket, dieses Trio definiert deine Wimpern und Brauen, umrahmt dein Gesicht und verleiht deinen natürlichen Wimpern Tiefe. Als perfekte Vor-Urlaubsbehandlung befreit dich dieses Paket von der täglichen Routine des Augenbrauen- und Wimpern-Make-ups und enthüllt einen dauerhaft einsatzbereiten, definierten Look.",
+          "priceFrom": 25,
+          "priceTo": 25,
+          "durationMin": 30,
+          "durationMax": 30,
+          "options": []
+        },
+        {
+          "id": "TR6977725",
+          "name": "Augenbrauen & Wimpern färben",
+          "steps": [],
+          "text": "Das Wimpern und Augenbrauen färben ist für alle, die sich einen auffälligen Wimpern-Effekt und vollere Brauen wünschen, die lange halten.",
+          "priceFrom": 20,
+          "priceTo": 20,
+          "durationMin": 20,
+          "durationMax": 20,
+          "options": []
+        }
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "id": 29086069,
+      "name": "Giulia",
+      "date": "2026-07-31",
+      "rating": 5,
+      "text": "Florentine ist so eine liebe Person! Ich bin immer super gerne hier und die Behandlungen sind auch top!",
+      "treatments": [
+        "Augenbrauen & Wimpern färben"
+      ],
+      "response": "Vielen Dank meine Liebe 🫶🏽 \nfür diese schönen Worte, ich behandel dich wirklich sehr gerne und freue mich schon sehr auf deinen nächsten Besuch 🥰"
+    },
+    {
+      "id": 28491575,
+      "name": "Thomas",
+      "date": "2026-06-18",
+      "rating": 5,
+      "text": "Wunderbar und absolut überzeugend war meine erste Gesichtsbehandlung bei Florentine! Das Studio biete eine sehr schöne, entspannte  Atmosphere, alles ist tipp topp sauber und stimmig eingerichtet. Florentine ist sehr sympathisch und nahm sich die Zeit, mir jeden Schritt der Behandlung kompetent zu erklären. Mein Hautbild ist durch Aquafacial und Microneedling total aufgewertet. Ich bin mit einem schönen Glow, frisch und gepflegt sehr zufrieden nach Haus gegangen – und komme bestimmt bald wieder.",
+      "treatments": [
+        "Feuchtigkeitsspendende Gesichtsbehandlung"
+      ],
+      "response": "Vielen Dank für diese tolle Bewertung 🫶🏽 \nIch freue mich schon sehr auf die nächste Behandlung 😊"
+    },
+    {
+      "id": 28039895,
+      "name": "Giulia",
+      "date": "2026-05-19",
+      "rating": 5,
+      "text": "Ich war bei la Beauté für eine kleine Auszeit Gesichtsbehandlung und ich kann wirklich nur positiv berichten. Ich hatte sogar inklusive noch eine Hautanalyse und mir wurde gezeigt, wie man beim Aqua facial vorgeht, weil die liebe Florentine mich hier toll beraten hat und gesagt hat, dass das super für meine Haut wäre. Ich konnte mich gut entspannen und würde definitiv wiederkommen!",
+      "treatments": [
+        "Gesichtsbehandlungen"
+      ],
+      "response": "Vielen lieben Dank für diese tolle Bewertungen 🥰 ich würde mich sehr freuen dich nochmal behandeln zu dürfen ☺️"
+    },
+    {
+      "id": 27985999,
+      "name": "Ilham",
+      "date": "2026-05-16",
+      "rating": 5,
+      "text": "Ich war bei der lieben Florentine zur Beauty-Care-Behandlung mit Microneedling sowie Augenbrauen- und Wimpernfärbung und habe mich rundum wohlgefühlt. Super kompetente Beratung, tolle Atmosphäre und alles sehr sauber und liebevoll eingerichtet. Ich komme definitiv wieder 😊",
+      "treatments": [
+        "Feuchtigkeitsspendende Gesichtsbehandlung"
+      ],
+      "response": "Vielen Dank meine Liebe 🫶🏽"
+    },
+    {
+      "id": 27978259,
+      "name": "Lea",
+      "date": "2026-05-15",
+      "rating": 5,
+      "text": "Ich bin seit Februar bei Florentine in Behandlung und habe seitdem eine deutliche Verbesserung meiner Haut festgestellt. Sowohl mit dem Aquafacial als auch mit dem Microneedling wurden tolle Ergebnisse erzielt.\n\nFlorentine erklärt jeden Behandlungsschritt verständlich, nimmt sich Zeit und ist dabei immer sehr sympathisch. Ich fühle mich bestens aufgehoben und komme jedes Mal gerne wieder.",
+      "treatments": [
+        "Feuchtigkeitsspendende Gesichtsbehandlung"
+      ],
+      "response": "Vielen Dank 😊"
+    }
+  ]
+}

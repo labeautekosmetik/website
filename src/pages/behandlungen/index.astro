@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import CategoryCard from '../../components/CategoryCard.astro';
+import TreatmentList from '../../components/TreatmentList.astro';
+import BookButton from '../../components/BookButton.astro';
+import { categories, itemsFor, unmappedGroups } from '../../data/treatments';
+import { site } from '../../data/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import { u } from '../../lib/url';
+---
+
+<Base
+  title="Behandlungen & Preise – Kosmetik in Bochum"
+  description="Alle Behandlungen und Preise von La Beauté Kosmetik in Bochum: Gesichtsbehandlungen, Aquafacial, Microneedling, Green Peel®, Lash & Brow Lifting."
+  schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Behandlungen', path: '/behandlungen/' }])]}
+>
+  <PageHead
+    eyebrow="Behandlungen & Preise"
+    title="Alles für deine <em>Haut</em>"
+    lead={`Hier findest du alle Behandlungen mit Dauer und Preis. Als Neukundin bekommst du ${site.newClientOffer}.`}
+    crumbs={[{ name: 'Behandlungen', path: 'behandlungen/' }]}
+  />
+
+  <section class="container" aria-labelledby="kat-h">
+    <h2 id="kat-h" class="visually-hidden">Kategorien</h2>
+    <div class="grid grid--4">{categories.map((c) => <CategoryCard category={c} />)}</div>
+  </section>
+
+  {
+    categories.map((c) => (
+      <section class="section" id={c.slug} aria-labelledby={`h-${c.slug}`}>
+        <div class="narrow">
+          <h2 id={`h-${c.slug}`}>{c.title}</h2>
+          <p class="lead">{c.short}</p>
+          <TreatmentList items={itemsFor(c)} stepsLabel={c.slug === 'green-peel' ? 'Ideal bei' : 'Ablauf'} />
+          <p style="margin-top:1.5rem">
+            <a href={u(`behandlungen/${c.slug}/`)}>Mehr zu {c.title} →</a>
+          </p>
+        </div>
+      </section>
+    ))
+  }
+
+  {
+    unmappedGroups().map((g) => (
+      <section class="section">
+        <div class="narrow">
+          <h2>{g.name}</h2>
+          <TreatmentList items={g.items} />
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section section--tint">
+    <div class="narrow" style="text-align:center">
+      <h2>Unsicher, was zu dir passt?</h2>
+      <p class="lead">Schreib mir einfach – oder buch eine klassische Behandlung, dann schauen wir uns deine Haut gemeinsam an.</p>
+      <div class="btn-row" style="justify-content:center"><BookButton /><a class="btn btn--ghost" href={u('kontakt/')}>Frage stellen</a></div>
+    </div>
+  </section>
+</Base>

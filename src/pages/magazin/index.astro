@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const articles = (await getCollection('magazin')).sort((a, b) => +b.data.pubDate - +a.data.pubDate);
+---
+
+<Base
+  title="Magazin – Hautwissen aus dem Kosmetikstudio in Bochum"
+  description="Tipps und Wissen rund um Microneedling, Aquafacial, Green Peel® und Lash Lifting – erklärt von Kosmetikerin Florentine Stukenkemper aus Bochum."
+>
+  <PageHead
+    eyebrow="Magazin"
+    title="Wissen für deine <em>Haut</em>"
+    lead="Was passiert eigentlich beim Microneedling? Welche Green Peel®-Stufe passt zu mir? Hier beantworte ich die Fragen, die ich im Studio am häufigsten höre."
+    crumbs={[{ name: 'Magazin', path: 'magazin/' }]}
+  />
+  <section class="section" style="padding-top:1rem">
+    <h2 class="visually-hidden">Alle Artikel</h2>
+    <div class="container grid grid--3">
+      {articles.map((a) => <ArticleCard entry={a} />)}
+    </div>
+  </section>
+</Base>

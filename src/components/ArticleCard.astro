@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { categories } from '../data/treatments';
+import { u } from '../lib/url';
+
+interface Props {
+  entry: CollectionEntry<'magazin'>;
+}
+const { entry } = Astro.props;
+const cat = categories.find((c) => c.slug === entry.data.treatment);
+---
+
+<a class="art card" href={u(`magazin/${entry.id}/`)}>
+  {cat && <span class="art__tag">{cat.title}</span>}
+  <h3>{entry.data.title.replace(/\s*[–|-]\s*La Beauté.*$/, '')}</h3>
+  <p>{entry.data.excerpt}</p>
+  <span class="art__more">Weiterlesen →</span>
+</a>
+
+<style>
+  .art {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  [data-theme='c1'] .art {
+    background: var(--bg);
+  }
+  .art:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+  .art__tag {
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .art h3 {
+    font-size: 1.15rem;
+    line-height: 1.35;
+  }
+  .art p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    flex: 1;
+  }
+  .art__more {
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+</style>

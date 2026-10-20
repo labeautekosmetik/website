@@ -1,0 +1,48 @@
+---
+// TODO before launch: fill every <span class="todo"> and have the text checked.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+---
+
+<Base title="Impressum" description="Impressum von La Beauté Kosmetik – Florentine Stukenkemper, Bochum." noindex>
+  <PageHead title="Impressum" />
+  <div class="narrow prose" style="padding-bottom:5rem">
+    <h2>Angaben gemäß § 5 DDG</h2>
+    <p>
+      {site.fullName}<br />
+      Inhaberin: {site.owner}<br />
+      {site.address.street}<br />
+      {site.address.zip} {site.address.city}
+    </p>
+
+    <h2>Kontakt</h2>
+    <p>
+      Telefon: {site.phoneDisplay}<br />
+      E-Mail: <span class="todo">{site.email} (bitte bestätigen)</span>
+    </p>
+
+    <h2>Umsatzsteuer</h2>
+    <p>
+      <span class="todo">Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: … – oder Hinweis auf Kleinunternehmerregelung (§ 19 UStG)</span>
+    </p>
+
+    <h2>Berufsbezeichnung</h2>
+    <p><span class="todo">Kosmetikerin – Ausbildung/Abschluss bitte ergänzen</span></p>
+
+    <h2>Verbraucherstreitbeilegung</h2>
+    <p>Ich bin nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+    <h2>Bildnachweis</h2>
+    <p>Fotos: {site.owner}<span class="todo"> (bitte bestätigen)</span></p>
+  </div>
+</Base>
+
+<style>
+  .todo {
+    background: #fff3c4;
+    color: #5c4a00;
+    padding: 0 0.25em;
+    border-radius: 3px;
+  }
+</style>

@@ -1,0 +1,162 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Faq from '../components/Faq.astro';
+import { whatsappLink } from '../data/site';
+import { euro, treatmentNotes } from '../data/treatments';
+import treatwell from '../data/treatwell.json';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
+import { u } from '../lib/url';
+
+// Concrete gift ideas; names and prices come from Treatwell so they never go stale.
+const giftIds = ['TR6977658', 'TR6977694', 'TR7121591', 'TR6977733'];
+const items = treatwell.groups.flatMap((g) => g.items);
+const gifts = giftIds.map((id) => items.find((i) => i.id === id)).filter((i) => i != null);
+
+const ask = (what: string) =>
+  whatsappLink(`Hallo Florentine, ich möchte gern einen Gutschein verschenken${what ? `: ${what}` : '.'}`);
+
+const voucherFaq = [
+  {
+    q: 'Wie schnell bekomme ich den Gutschein?',
+    a: 'Schreib mir einfach, für wen und wofür – ich melde mich so schnell wie möglich und wir klären, wie der Gutschein am schnellsten zu dir kommt. Wenn es eilt, sag es mir gleich in der ersten Nachricht.',
+  },
+  {
+    q: 'Wie lange ist ein Gutschein gültig?',
+    a: 'Gutscheine sind drei Jahre gültig, gerechnet ab dem Ende des Jahres, in dem sie gekauft wurden.',
+  },
+];
+---
+
+<Base
+  title="Gutscheine für Kosmetik in Bochum verschenken"
+  description="Kosmetik-Gutscheine von La Beauté in Bochum: Aquafacial, Lash Lifting, Green Peel® oder ein Wunschbetrag. Einfach per WhatsApp oder Formular anfragen."
+  schema={[faqSchema(voucherFaq), breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Gutscheine', path: '/gutscheine/' }])]}
+  actionBar={{ label: 'Gutschein anfragen', href: ask('') }}
+>
+  <PageHead
+    eyebrow="Gutscheine"
+    title="Eine Auszeit, die <em>gut tut</em>"
+    lead="Zeit für sich selbst zu schenken, ist etwas ganz Besonderes. Ob von der Familie oder gemeinsam von Freundinnen – über eine persönliche Behandlung freuen sich Jung und Alt."
+    crumbs={[{ name: 'Gutscheine', path: 'gutscheine/' }]}
+  >
+    <div class="btn-row">
+      <a class="btn" href={ask('')} target="_blank" rel="noopener">Per WhatsApp anfragen</a>
+      <a class="btn btn--ghost" href={u('kontakt/?anliegen=gutschein')}>Per Formular anfragen</a>
+    </div>
+  </PageHead>
+
+  <section class="section" style="padding-top:1.5rem" aria-labelledby="ideen">
+    <div class="container">
+      <h2 id="ideen">Beliebte <em>Geschenkideen</em></h2>
+      <div class="grid grid--4 gifts">
+        {
+          gifts.map((g) => (
+            <a class="card gift" href={ask(g.name)} target="_blank" rel="noopener">
+              <span class="gift__price">{euro(g.priceFrom)}</span>
+              <h3>{g.name.replace(/ inkl\..*$/, '')}</h3>
+              <p>{treatmentNotes[g.id]?.lead ?? g.text}</p>
+              <span class="gift__cta">Diesen Gutschein anfragen →</span>
+            </a>
+          ))
+        }
+        <a class="card gift gift--free" href={ask('Wunschbetrag')} target="_blank" rel="noopener">
+          <span class="gift__price">Wunschbetrag</span>
+          <h3>Frei wählbar</h3>
+          <p>Du bestimmst den Betrag – die Beschenkte sucht sich ihre Lieblingsbehandlung selbst aus.</p>
+          <span class="gift__cta">Wertgutschein anfragen →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="so">
+    <div class="container">
+      <h2 id="so">So <em>einfach</em> geht's</h2>
+      <div class="grid grid--3">
+        <div class="step">
+          <span class="step__n">1</span>
+          <h3>Auswählen</h3>
+          <p>Eine bestimmte Behandlung oder ein Wunschbetrag – du entscheidest.</p>
+        </div>
+        <div class="step">
+          <span class="step__n">2</span>
+          <h3>Anfragen</h3>
+          <p>Schreib mir per WhatsApp oder über das Formular, für wen und wofür.</p>
+        </div>
+        <div class="step">
+          <span class="step__n">3</span>
+          <h3>Verschenken</h3>
+          <p>Ich bereite deinen Gutschein liebevoll vor, und wir klären, wie er am schnellsten zu dir kommt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="gut">
+    <div class="narrow">
+      <h2 id="gut">Gut zu <em>wissen</em></h2>
+      <Faq items={voucherFaq} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .gifts {
+    margin-top: 1.5rem;
+  }
+  .gift {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .gift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+  .gift__price {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .gift h3 {
+    margin-bottom: 0.4rem;
+  }
+  .gift p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    flex: 1;
+  }
+  .gift__cta {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .gift--free {
+    background: var(--accent-soft);
+  }
+  .step h3 {
+    font-weight: 500;
+  }
+  .step p {
+    color: var(--muted);
+    margin: 0;
+  }
+  .step__n {
+    display: inline-grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  @media (min-width: 1024px) {
+    .gifts {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+</style>

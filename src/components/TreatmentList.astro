@@ -1,0 +1,157 @@
+---
+// One block per Treatwell treatment: name, duration, price, steps, book button.
+import BookButton from './BookButton.astro';
+import { euro, minutes, treatmentNotes, type TreatwellItem } from '../data/treatments';
+
+interface Props {
+  items: TreatwellItem[];
+  // Treatwell lists either steps ("Ablauf") or skin concerns ("Ideal bei") as bullets.
+  stepsLabel?: string;
+}
+const { items, stepsLabel = 'Ablauf' } = Astro.props;
+
+const single = (i: TreatwellItem) => i.options.find((o) => /^1er/i.test(o.name))?.price ?? null;
+
+// "3er Paket" → show what you save compared to three single sessions.
+const optionLabel = (i: TreatwellItem, o: TreatwellItem['options'][number]) => {
+  const name = o.name.replace(/minuten/i, 'Min.').replace(/^(\d)er Paket$/i, (_, n) => (n === '1' ? 'Einzeln' : `${n}er-Paket`));
+  const n = Number(o.name.match(/^(\d)er/i)?.[1] ?? 0);
+  const base = single(i);
+  const saving = n > 1 && base && o.price ? base * n - o.price : 0;
+  return { name, price: euro(o.price), note: saving > 0 ? `statt ${euro(base! * n)}` : '' };
+};
+---
+
+<ul class="tlist">
+  {
+    items.map((i) => {
+      const note = treatmentNotes[i.id] ?? {};
+      const steps = note.steps ?? i.steps;
+      const lead = note.lead ?? i.text;
+      return (
+        <li class="titem card">
+          <div class="titem__head">
+            <h3>{i.name}</h3>
+            <p class="titem__meta">
+              <span class="titem__dur">{minutes(i.durationMin, i.durationMax)}</span>
+              {i.options.length === 0 && <span class="titem__price">{euro(i.priceFrom)}</span>}
+            </p>
+          </div>
+          {i.options.length > 0 && (
+            <ul class="titem__options">
+              {i.options.map((o) => {
+                const l = optionLabel(i, o);
+                return (
+                  <li>
+                    <span>{l.name}</span>
+                    <span>
+                      {l.note && <s class="titem__was">{l.note.replace('statt ', '')}</s>} <strong>{l.price}</strong>
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          {lead && <p class="titem__lead">{lead}</p>}
+          {steps.length > 0 && (
+            <div class="titem__stepbox">
+              <span class="titem__steplabel">{stepsLabel}</span>
+              <ul class="titem__steps">
+                {steps.map((s) => (
+                  <li>{s}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div class="titem__cta">
+            <BookButton size="small" variant="ghost" label="Buchen" context={i.name} serviceId={i.id} />
+          </div>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .tlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .titem__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+  }
+  .titem h3 {
+    margin: 0;
+  }
+  .titem__meta {
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  .titem__options {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+    max-width: 320px;
+  }
+  .titem__options li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .titem__options strong {
+    font-weight: 500;
+  }
+  .titem__was {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-right: 0.35rem;
+  }
+  .titem__price {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .titem__lead {
+    margin: 0.75rem 0 0;
+    color: var(--muted);
+  }
+  .titem__stepbox {
+    margin-top: 1rem;
+  }
+  .titem__steplabel {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .titem__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .titem__steps li {
+    display: inline;
+  }
+  .titem__steps li + li::before {
+    content: ' · ';
+  }
+  .titem__cta {
+    margin-top: 1.1rem;
+  }
+</style>

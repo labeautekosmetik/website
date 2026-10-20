@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { u } from '../lib/url';
+---
+
+<Base title="Danke für deine Nachricht" description="Deine Nachricht ist bei mir angekommen." noindex>
+  <PageHead
+    eyebrow="Nachricht gesendet"
+    title="Danke – ich melde mich <em>bald</em>!"
+    lead="Deine Nachricht ist bei mir angekommen. In der Regel antworte ich innerhalb von 1–2 Werktagen."
+  >
+    <div class="btn-row"><a class="btn btn--ghost" href={u()}>Zur Startseite</a></div>
+  </PageHead>
+  <div class="section"></div>
+</Base>
