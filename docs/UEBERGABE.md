@@ -8,7 +8,7 @@ Ziel: Florentine besitzt am Ende **alle** Konten rund um ihre Website selbst. Ma
 
 | Konto | Heute bei | Was passiert | Kosten |
 |---|---|---|---|
-| Domain + E-Mail (Strato) | Marius | Vertrag auf Florentine übertragen | laufend, Strato-Tarif |
+| Domain + E-Mail (Strato) | Vertrag: Florentine, Login: Marius | Login-E-Mail + Passwort auf Florentine umstellen | laufend, Strato-Tarif |
 | GitHub-Organisation `labeautekosmetik` | Marius (Owner) | Florentine wird Owner, Marius Mitglied | kostenlos |
 | Netlify (Hosting, Formular) | Marius | Site in Florentines Netlify-Account | kostenlos |
 | Treatwell | Florentine | bleibt, nur Kategorien umbenennen | wie bisher |
@@ -24,14 +24,13 @@ Ziel: Florentine besitzt am Ende **alle** Konten rund um ihre Website selbst. Ma
 
 ## 1. Domain und E-Mail (Strato)
 
-Die Domain `labeautekosmetik.de` und das Postfach `info@labeautekosmetik.de` laufen über den Strato-Vertrag von Marius. Das Postfach zieht mit dem Vertrag um – E-Mails bleiben erhalten.
+Der Strato-Vertrag (Domain `labeautekosmetik.de` + Postfach `info@labeautekosmetik.de`) läuft **bereits auf Florentine**. Nur der Login hängt noch an Marius' privater E-Mail-Adresse. Eine Vertragsübernahme ist also nicht nötig.
 
-- [ ] Bei Strato die **Vertragsübernahme** beantragen (Strato-Hilfe → „Vertragsübernahme“ bzw. „Inhaberwechsel“). Dafür unterschreiben beide ein Formular. Florentine hinterlegt dabei ihre eigene Zahlungsmethode.
+- [ ] Im Strato-Kundenlogin unter den Kontaktdaten die **Login-/Kontakt-E-Mail** auf Florentines Adresse ändern (z. B. `info@labeautekosmetik.de` oder ihre private).
+- [ ] **Zahlungsmethode** prüfen – falls dort Marius' Konto/Karte hinterlegt ist, auf Florentines ändern.
+- [ ] Florentine ändert das **Strato-Passwort** und das **Postfach-Passwort** von `info@` und legt beide in ihren Passwort-Manager.
 - [ ] Prüfen: In der Domainverwaltung steht **Florentine als Domain-Inhaberin** (auch bei der DENIC-Abfrage auf denic.de).
-- [ ] Florentine ändert das **Strato-Passwort** und das **Postfach-Passwort** von `info@`.
-- [ ] Die DNS-Einträge (A-Record auf Netlify, `www` als CNAME, MX bei Strato) **nicht anfassen** – sie bleiben bei der Übernahme gleich. Danach einmal testen: Website lädt, Testmail an `info@` kommt an.
-
-> Falls die Domain noch nicht registriert bzw. aktiv ist: am einfachsten gleich einen neuen Vertrag auf Florentines Namen abschließen, statt später zu übertragen.
+- [ ] Die DNS-Einträge (A-Record auf Netlify, `www` als CNAME, MX bei Strato) **nicht anfassen**. Danach einmal testen: Website lädt, Testmail an `info@` kommt an.
 
 ## 2. GitHub (Code der Website)
 
