@@ -27,6 +27,7 @@ npm run check              # Typprüfung
 | Fotos | `public/images/` |
 
 Offene Punkte für Florentine: siehe [`docs/TODO-florentine.md`](docs/TODO-florentine.md).
+Übergabe aller Konten an Florentine: siehe [`docs/UEBERGABE.md`](docs/UEBERGABE.md).
 
 ## Hosting (Netlify)
 
