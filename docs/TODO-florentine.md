@@ -5,7 +5,7 @@ Bitte einmal durchgehen. Alles hier ist entweder noch leer oder von uns angenomm
 ## Muss vor dem Livegang
 
 - [ ] **Design wählen:** Variante A (Klar & warm) oder B (Klar & frisch)
-- [ ] **E-Mail-Adresse** für Impressum und Kontakt (aktuell Platzhalter `info@labeautekosmetik.de`)
+- [ ] **Postfach `info@labeautekosmetik.de`** bei Strato anlegen, sobald die Domain aktiv ist, und mit einer Testmail prüfen (Netlify schickt Formular-Anfragen dorthin)
 - [ ] **Impressum:** USt-IdNr. oder Hinweis Kleinunternehmerin (§ 19 UStG), Berufsbezeichnung/Ausbildung
 - [ ] **Datenschutzerklärung** rechtlich prüfen lassen (z. B. Generator von eRecht24 oder Fachperson); Betreiberangaben Treatwell und Netlify ergänzen
 - [ ] **Fotos:** Sind die 4 Studiofotos von Treatwell deine eigenen? Dürfen wir sie nutzen? Stammt Bildnachweis von dir?

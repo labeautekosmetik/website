@@ -22,7 +22,6 @@ export const site = {
   phone: '+49 15568 710042',
   phoneDisplay: '0155 68 710042',
   whatsapp: '4915568710042',
-  // TODO(Florentine): E-Mail-Adresse für Impressum & Kontakt
   email: 'info@labeautekosmetik.de',
   instagram: 'https://www.instagram.com/la.beaute.kosmetik/',
   instagramHandle: '@la.beaute.kosmetik',
