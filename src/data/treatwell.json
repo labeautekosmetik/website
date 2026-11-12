@@ -3,8 +3,8 @@
   "venueId": 523993,
   "name": "La Beauté Kosmetik - Florentine Stukenkemper",
   "rating": {
-    "average": 4.9,
-    "count": 9
+    "average": 4.91,
+    "count": 10
   },
   "openingHours": [
     {
@@ -321,6 +321,17 @@
   ],
   "reviews": [
     {
+      "id": 30417109,
+      "name": "Cornelia",
+      "date": "2026-11-11",
+      "rating": 5,
+      "text": "Regelmäßig komme ich zur Behandlung, mein Gesicht spricht für sich. Ich fühle mich sehr gut aufgehoben in diesem schönen Ambiente, alles ist super clean und ich werde von Florentine so toll behandelt! Glow bis zum nächsten Besuch.",
+      "treatments": [
+        "Feuchtigkeitsspendende Gesichtsbehandlung"
+      ],
+      "response": null
+    },
+    {
       "id": 29086069,
       "name": "Giulia",
       "date": "2026-07-31",
@@ -363,17 +374,6 @@
         "Feuchtigkeitsspendende Gesichtsbehandlung"
       ],
       "response": "Vielen Dank meine Liebe 🫶🏽"
-    },
-    {
-      "id": 27978259,
-      "name": "Lea",
-      "date": "2026-05-15",
-      "rating": 5,
-      "text": "Ich bin seit Februar bei Florentine in Behandlung und habe seitdem eine deutliche Verbesserung meiner Haut festgestellt. Sowohl mit dem Aquafacial als auch mit dem Microneedling wurden tolle Ergebnisse erzielt.\n\nFlorentine erklärt jeden Behandlungsschritt verständlich, nimmt sich Zeit und ist dabei immer sehr sympathisch. Ich fühle mich bestens aufgehoben und komme jedes Mal gerne wieder.",
-      "treatments": [
-        "Feuchtigkeitsspendende Gesichtsbehandlung"
-      ],
-      "response": "Vielen Dank 😊"
     }
   ]
 }
